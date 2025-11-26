@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Personal Finance Tracker
+
+A comprehensive personal finance management application built with Next.js, designed to help you track your income, expenses, budgets, and accounts in one place.
+
+## Features
+
+-   **User Authentication**: Secure sign-up and login using [Clerk](https://clerk.com/).
+-   **Dashboard**: Visual overview of your financial health with charts and summaries.
+-   **Account Management**: Manage multiple accounts (Checking, Savings, etc.).
+-   **Transaction Tracking**: Record income and expenses with categories and receipts.
+-   **Budgeting**: Set and monitor budgets to stay on track.
+-   **Recurring Transactions**: Handle subscriptions and regular payments automatically.
+-   **Responsive Design**: Works seamlessly on desktop and mobile devices.
+
+## Tech Stack
+
+-   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+-   **Language**: TypeScript / JavaScript
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Database**: PostgreSQL (via [Prisma ORM](https://www.prisma.io/))
+-   **Authentication**: [Clerk](https://clerk.com/)
+-   **Forms**: React Hook Form + Zod
+-   **UI Components**: Radix UI, Lucide React, Sonner
+-   **Charts**: Recharts
+-   **Background Jobs**: Inngest
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up the project locally.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Node.js (v18 or later)
+-   npm, yarn, pnpm, or bun
+-   PostgreSQL database (local or cloud, e.g., Neon, Supabase)
+-   Clerk account for authentication
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  **Clone the repository:**
 
-## Learn More
+    ```bash
+    git clone <repository-url>
+    cd personal_finance
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Install dependencies:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3.  **Environment Variables:**
 
-## Deploy on Vercel
+    Create a `.env` file in the root directory and add the following variables:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```env
+    # Database
+    DATABASE_URL="postgresql://..."
+    DIRECT_URL="postgresql://..."
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    # Clerk Auth
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+    CLERK_SECRET_KEY=sk_test_...
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    ```
+
+4.  **Database Setup:**
+
+    Run Prisma migrations to set up your database schema:
+
+    ```bash
+    npx prisma migrate dev
+    ```
+
+5.  **Run the Application:**
+
+    Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Project Structure
+
+-   `app/`: Next.js App Router pages and layouts.
+-   `components/`: Reusable UI components.
+-   `lib/`: Utility functions and configurations.
+-   `prisma/`: Database schema and migrations.
+-   `actions/`: Server actions for data mutations.
+-   `hooks/`: Custom React hooks.
+-   `public/`: Static assets.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
