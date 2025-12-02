@@ -1,13 +1,13 @@
 import Header from "@/components/header";
-import { checkUser } from "@/lib/checkuser";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function MainLayout({ children }) {
-  const user = await checkUser();
+  const { userId } = await auth();
 
-  if (!user) {
+  if (!userId) {
     redirect("/sign-in");
-  }
+  }  
 
   return (
     <div className="min-h-screen bg-background">
