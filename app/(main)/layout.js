@@ -1,11 +1,11 @@
 import Header from "@/components/header";
+import { checkUser } from "@/lib/checkuser";
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 
 export default async function MainLayout({ children }) {
-  const { userId } = await auth();
+  const user = await checkUser();
 
-  if (!userId) {
+  if (!user) {
     redirect("/sign-in");
   }
 
