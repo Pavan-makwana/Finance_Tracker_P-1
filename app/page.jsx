@@ -105,7 +105,7 @@ export default function Home() {
             <p className="text-blue-100 mb-8 max-w-2xl mx-auto text-lg mb-8">
               join Thousands of people who have already transformed their finances with our app 
             </p>
-            <Link href="/dashboard" >
+            <Link href="/dashboard" > 
               <Button className="bg-white text-blue-600  rounded-full hover:bg-blue-100 animate-bounce">
                 Start for Free
               </Button>
