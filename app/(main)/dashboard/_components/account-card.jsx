@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'INR',
+    currency: 'INR',  
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   }).format(amount);
