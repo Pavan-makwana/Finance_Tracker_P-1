@@ -21,6 +21,8 @@ const formatCurrency = (amount) => {
   }).format(amount);
 };
 
+export const dynamic = "force-dynamic";
+
 const AccountPage = async ({ params, searchParams }) => {
 
   const accountData = await getAccountWithTransactions(params.id);

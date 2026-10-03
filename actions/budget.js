@@ -53,6 +53,9 @@ export async function getCurrentBudget(accountId) {
       accountBalance: accountBalance
     };
   } catch (error) {
+    if (error?.digest === "DYNAMIC_SERVER_USAGE") {
+      throw error;
+    }
     console.error("Error fetching budget:", error);
     throw error;
   }

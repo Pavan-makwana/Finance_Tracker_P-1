@@ -118,6 +118,9 @@ export async function getUserAccounts() {
             accounts: serializedAccounts 
         };
     } catch (error) {
+        if (error?.digest === "DYNAMIC_SERVER_USAGE") {
+            throw error;
+        }
         console.error('Database error in getUserAccounts:', error);
         return { 
             success: false, 
@@ -174,6 +177,9 @@ export async function getDashboardData() {
             transactions: serializedTransactions 
         };
     } catch (error) {
+        if (error?.digest === "DYNAMIC_SERVER_USAGE") {
+            throw error;
+        }
         console.error('Database error in getDashboardData:', error);
         return { 
             success: false, 
