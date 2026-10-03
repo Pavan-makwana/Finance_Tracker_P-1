@@ -1,10 +1,10 @@
 //actions/dashboard.js
-"use server"
-import { auth } from "@clerk/nextjs/server"
-import { db } from "../app/lib/db"
-
-import { accountSchema } from "../app/lib/schema"
-import { revalidatePath } from "next/cache"
+"use server";
+import { auth } from "@clerk/nextjs/server";
+import { db } from "@/lib/prisma";
+import { checkUser } from "@/lib/checkuser";
+import { accountSchema } from "../app/lib/schema";
+import { revalidatePath } from "next/cache";
 
 const serializeTransaction = (obj) => {
     if (!obj) return null;
@@ -17,7 +17,7 @@ const serializeTransaction = (obj) => {
         serialized.amount = Number(obj.amount);
     }
     return serialized;
-}
+};
 
 export async function createAccount(data) {
     try {
@@ -25,14 +25,20 @@ export async function createAccount(data) {
         if (!userId) {
             return { error: "Unauthorized" };
         }
-        const user = await db.user.findUnique({
+        let user = await db.user.findUnique({
             where: {
                 clerkUserId: userId,
             },
         });
         if (!user) {
+            user = await checkUser();
+        }
+        if (!user) {
             return { error: "User not found" };
         }
+
+        // Map CURRENT to CHECKING to match Prisma enum
+        const accountType = data.type === "CURRENT" ? "CHECKING" : data.type;
 
         // Convert amount to float before saving
         const balanceFloat = parseFloat(data.balance);
@@ -46,7 +52,7 @@ export async function createAccount(data) {
             },
         });
 
-        //if this account should be default, unset other default accounts
+        // If this account should be default, unset other default accounts
         const shouldBeDefault = existingAccounts.length === 0 ? true : data.isDefault;
         if (shouldBeDefault) {
             await db.account.updateMany({
@@ -62,6 +68,7 @@ export async function createAccount(data) {
         const account = await db.account.create({
             data: {
                 ...data,
+                type: accountType,
                 balance: balanceFloat,
                 userId: user.id,
                 isDefault: shouldBeDefault,
@@ -82,9 +89,12 @@ export async function getUserAccounts() {
             return { success: false, error: "Unauthorized" };
         }
     
-        const user = await db.user.findUnique({
+        let user = await db.user.findUnique({
             where: { clerkUserId: userId },
         });
+        if (!user) {
+            user = await checkUser();
+        }
     
         if (!user) {
             return { success: false, error: "User not found" };
@@ -123,9 +133,12 @@ export async function getDashboardData() {
             return { error: "Unauthorized" };
         }
     
-        const user = await db.user.findUnique({
+        let user = await db.user.findUnique({
             where: { clerkUserId: userId },
         });
+        if (!user) {
+            user = await checkUser();
+        }
     
         if (!user) {
             return { error: "User not found" };
@@ -168,4 +181,3 @@ export async function getDashboardData() {
         };
     }
 }
-  

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const accountSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
-    type: z.enum(["CURRENT", "SAVINGS"]),
+    type: z.enum(["CURRENT", "SAVINGS", "CHECKING"]),
     balance: z.string().min(1, { message: "Balance is required" }),
     isDefault: z.boolean().default(false),
 });
