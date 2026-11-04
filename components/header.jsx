@@ -8,65 +8,72 @@ import {
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, PenBox } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { checkUser } from "@/lib/checkuser";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { BrandLogo } from "@/components/logo";
 
 const Header = async () => {
-  const user = await checkUser();
-  
+  await checkUser();
+
   return (
-    <div className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b ">
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center ">
-        <Link href="/">
-          <Image
-            src={"/Logos.png"}
-            alt="logo"
-            width={200}
-            height={60}
-            className="h-12 w-auto object-contain rounded-full"
-            priority
-          />
+    <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-border/50 transition-colors">
+      <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Modern Vector Animated Brand Logo */}
+        <Link href="/" className="transition-transform hover:scale-102">
+          <BrandLogo size="md" animated={true} />
         </Link>
 
-        <div className="flex items-center space-x-4">
+        {/* Navigation Controls */}
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <SignedIn>
-            <Link href={"/dashboard"} className="text-gray-600 hover:text-blue-600 flex items-center gap-2 ">
-              <Button variant="outline">
-                <LayoutDashboard size={18} />
-                <span className="hidden md:inline">dashboard</span>
+            <Link href="/dashboard" className="transition-colors">
+              <Button variant="outline" size="sm" className="gap-2 h-9 text-xs sm:text-sm font-medium">
+                <LayoutDashboard size={15} />
+                <span className="hidden md:inline">Dashboard</span>
               </Button>
             </Link>
-            
+
             <Link href="/transaction/create">
-              <Button>
-                <PenBox size={18} />
-                <span className="hidden md:inline">Add transaction</span>
+              <Button size="sm" className="gap-2 h-9 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm text-xs sm:text-sm font-semibold">
+                <PenBox size={15} />
+                <span className="hidden md:inline">Add Transaction</span>
               </Button>
             </Link>
           </SignedIn>
-          
+
           <SignedOut>
             <SignInButton mode="modal">
-              <Button variant="outline">Login</Button>
+              <Button variant="outline" size="sm" className="h-9 text-xs sm:text-sm">
+                Login
+              </Button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <Button>Sign Up</Button>
+              <Button size="sm" className="h-9 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm text-xs sm:text-sm font-semibold">
+                Sign Up
+              </Button>
             </SignUpButton>
           </SignedOut>
-          
+
+          {/* Multi-Language & Tour Switcher */}
+          <LanguageSwitcher />
+
+          {/* Dark / Light Mode Switcher */}
+          <ThemeToggle />
+
           <SignedIn>
-            <UserButton 
+            <UserButton
               afterSignOutUrl="/"
               appearance={{
                 elements: {
-                  avatarBox: "h-10 w-10",
+                  avatarBox: "h-9 w-9 ring-2 ring-primary/20 hover:ring-primary/40 transition-all",
                 },
-              }} 
+              }}
             />
           </SignedIn>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 

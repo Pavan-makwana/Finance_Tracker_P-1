@@ -13,6 +13,7 @@ import {
   ChevronRight,
   RefreshCw,
   Clock,
+  Download,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -125,7 +126,7 @@ export function TransactionTable({ transactions }) {
           comparison = a.amount - b.amount;
           break;
         case "category":
-          comparison = a.category.localeCompare(b.category);
+          comparison = (a.category || "").localeCompare(b.category || "");
           break;
         default:
           comparison = 0;
@@ -192,9 +193,41 @@ export function TransactionTable({ transactions }) {
 
   useEffect(() => {
     if (deleted && !deleteLoading) {
-      toast.error("Transactions deleted successfully");
+      toast.success("Transactions deleted successfully");
+      setSelectedIds([]);
+      router.refresh();
     }
-  }, [deleted, deleteLoading]);
+  }, [deleted, deleteLoading, router]);
+
+  const handleExportCSV = () => {
+    if (!filteredAndSortedTransactions.length) {
+      toast.error("No transactions to export");
+      return;
+    }
+
+    const headers = ["Date", "Description", "Category", "Type", "Amount", "Recurring"];
+    const rows = filteredAndSortedTransactions.map((t) => [
+      format(new Date(t.date), "yyyy-MM-dd"),
+      `"${(t.description || "").replace(/"/g, '""')}"`,
+      `"${(t.category || "Other").replace(/"/g, '""')}"`,
+      t.type,
+      t.amount,
+      t.isRecurring ? "Yes" : "No",
+    ]);
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `transactions_${format(new Date(), "yyyy-MM-dd")}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Transactions exported successfully");
+  };
 
   const handleClearFilters = () => {
     setSearchTerm("");
@@ -251,7 +284,7 @@ export function TransactionTable({ transactions }) {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-[155px]">
               <SelectValue placeholder="All Transactions" />
             </SelectTrigger>
             <SelectContent>
@@ -284,6 +317,17 @@ export function TransactionTable({ transactions }) {
               <X className="h-4 w-5" />
             </Button>
           )}
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleExportCSV}
+            className="flex items-center gap-1.5"
+            title="Export to CSV"
+          >
+            <Download className="h-4 w-4" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </Button>
         </div>
       </div>
 
@@ -375,23 +419,22 @@ export function TransactionTable({ transactions }) {
                     {(() => {
                       const category = defaultCategories.find(cat => cat.id === transaction.category);
                       return (
-                        <span
-                          style={{
-                            background: category?.color || '#94a3b8', // fallback to a neutral gray
-                          }}
-                          className="px-2 py-1 rounded text-white text-sm"
-                        >
-                          {category?.name || transaction.category || 'Other'}
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border border-border/60 bg-muted/50 text-foreground">
+                          <span
+                            className="w-2 h-2 rounded-full shrink-0"
+                            style={{ backgroundColor: category?.color || "#94a3b8" }}
+                          />
+                          {category?.name || transaction.category || "Other"}
                         </span>
                       );
                     })()}
                   </TableCell>
                   <TableCell
                     className={cn(
-                      "text-right font-medium",
+                      "text-right font-semibold font-mono text-sm",
                       transaction.type === "EXPENSE"
-                        ? "text-red-500"
-                        : "text-green-500"
+                        ? "text-rose-600 dark:text-rose-400"
+                        : "text-emerald-600 dark:text-emerald-400"
                     )}
                   >
                     {transaction.type === "EXPENSE" ? "-" : "+"}{formatCurrency(transaction.amount)}
@@ -403,7 +446,7 @@ export function TransactionTable({ transactions }) {
                           <TooltipTrigger>
                             <Badge
                               variant="secondary"
-                              className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200"
+                              className="gap-1 bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 hover:bg-purple-200"
                             >
                               <RefreshCw className="h-3 w-3" />
                               {
@@ -417,10 +460,12 @@ export function TransactionTable({ transactions }) {
                             <div className="text-sm">
                               <div className="font-medium">Next Date:</div>
                               <div>
-                                {format(
-                                  new Date(transaction.nextRecurringDate),
-                                  "PPP"
-                                )}
+                                {transaction.nextRecurringDate
+                                  ? format(
+                                      new Date(transaction.nextRecurringDate),
+                                      "PPP"
+                                    )
+                                  : "Pending"}
                               </div>
                             </div>
                           </TooltipContent>

@@ -77,11 +77,11 @@ export function CreateAccountDrawer({ children }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Create New Account</DrawerTitle>
+      <DrawerContent className="max-w-lg mx-auto rounded-t-3xl border-border/80 bg-background/95 backdrop-blur-md">
+        <DrawerHeader className="text-left pt-6">
+          <DrawerTitle className="text-xl font-bold">Create New Account</DrawerTitle>
         </DrawerHeader>
-        <div className="px-4 pb-4">
+        <div className="px-6 pb-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <label

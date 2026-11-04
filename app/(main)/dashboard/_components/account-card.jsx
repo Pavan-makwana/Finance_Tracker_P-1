@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { ArrowDownRight, ArrowUpRight, Plus } from 'lucide-react';
 import { useRouter } from "next/navigation";
@@ -58,44 +59,39 @@ export function AccountCard({ account, isAddCard }) {
 
   // Regular account card
   return (
-    <Card
-      onClick={() => router.push(`/account/${account.id}`)}
-      className="p-6 hover:shadow-md transition-shadow cursor-pointer"
-    >
-      <div className="flex justify-between items-start">
-        <div className="space-y-1">
-          <h3 className="text-lg font-semibold">{account.name}</h3>
-          <p className="text-sm text-gray-500 capitalize">{account.type.toLowerCase()} Account</p>
-        </div>
-        <div onClick={(e) => e.stopPropagation()}>
-          <Switch
-            checked={isDefault}
-            onCheckedChange={handleDefaultChange}
-            disabled={isUpdating || isDefault}
-            aria-label="Toggle default account"
-          />
-        </div>
-      </div>
+    <Link href={`/account/${account.id}`} className="block group">
+      <Card className="p-6 hover:shadow-md transition-all cursor-pointer h-full flex flex-col justify-between group-hover:border-primary/50">
+        <div>
+          <div className="flex justify-between items-start">
+            <div className="space-y-1">
+              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">{account.name}</h3>
+              <p className="text-sm text-gray-500 capitalize">{account.type.toLowerCase()} Account</p>
+            </div>
+            <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+              <Switch
+                checked={isDefault}
+                onCheckedChange={handleDefaultChange}
+                disabled={isUpdating || isDefault}
+                aria-label="Toggle default account"
+              />
+            </div>
+          </div>
 
-      <div className="mt-2">
-        <div className="flex items-center gap-2">
-          <p className="text-2xl font-bold">{formatCurrency(account.balance)}</p>
-          {account.isDefault && (
-            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Default</span>
-          )}
+          <div className="mt-4">
+            <div className="flex items-center gap-2">
+              <p className="text-2xl font-bold">{formatCurrency(account.balance)}</p>
+              {account.isDefault && (
+                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">Default</span>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-4 flex justify-between px-2">
-        <div className="flex items-center text-green-600 text-sm">
-          <ArrowUpRight className="w-4 h-4 mr-1" />
-          <span>Income</span>
+        <div className="mt-6 pt-3 border-t flex justify-between items-center text-xs text-muted-foreground group-hover:text-primary transition-colors">
+          <span>View Account & Statements</span>
+          <ArrowUpRight className="w-4 h-4" />
         </div>
-        <div className="flex items-center text-red-600 text-sm">
-          <ArrowDownRight className="w-4 h-4 mr-1" />
-          <span>Expense</span>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </Link>
   );
 }

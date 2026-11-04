@@ -1,6 +1,6 @@
-import Header from "@/components/header";
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";      
+import { auth } from "@clerk/nextjs/server";
+
 export const dynamic = "force-dynamic";
 
 export default async function MainLayout({ children }) {
@@ -8,14 +8,13 @@ export default async function MainLayout({ children }) {
 
   if (!userId) {
     redirect("/sign-in");
-  }   
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <main className="container mx-auto px-4 py-6 mt-16">
+      <div className="container mx-auto px-4 py-8 pt-24 min-h-[calc(100vh-140px)]">
         {children}
-      </main>
+      </div>
     </div>
   );
 }

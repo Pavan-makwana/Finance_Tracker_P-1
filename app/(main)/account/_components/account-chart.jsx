@@ -191,52 +191,48 @@ const AccountChart = ({ transactions, isLoading }) => {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className={cn(
-            "p-4 rounded-lg",
-            "bg-green-50 border border-green-100"
-          )}>
+          <div className="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-800/40">
             <div className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-green-500" />
-              <span className="text-sm font-medium text-green-700">Total Income</span>
+              <ArrowUpRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Total Income</span>
             </div>
-            <div className="mt-2 text-2xl font-semibold text-green-700">
+            <div className="mt-2 text-2xl font-bold font-mono text-emerald-700 dark:text-emerald-400">
               {formatCurrency(totals.income)}
             </div>
           </div>
           
-          <div className={cn(
-            "p-4 rounded-lg",
-            "bg-red-50 border border-red-100"
-          )}>
+          <div className="p-4 rounded-xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/70 dark:border-rose-800/40">
             <div className="flex items-center gap-2">
-              <ArrowDownRight className="h-4 w-4 text-red-500" />
-              <span className="text-sm font-medium text-red-700">Total Expenses</span>
+              <ArrowDownRight className="h-4 w-4 text-rose-600 dark:text-rose-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-300">Total Expenses</span>
             </div>
-            <div className="mt-2 text-2xl font-semibold text-red-700">
+            <div className="mt-2 text-2xl font-bold font-mono text-rose-700 dark:text-rose-400">
               {formatCurrency(totals.expense)}
             </div>
           </div>
 
           <div className={cn(
-            "p-4 rounded-lg",
-            netAmount >= 0 ? "bg-green-50 border border-green-100" : "bg-red-50 border border-red-100"
+            "p-4 rounded-xl border",
+            isPositive
+              ? "bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200/70 dark:border-emerald-800/40"
+              : "bg-rose-50/70 dark:bg-rose-950/30 border-rose-200/70 dark:border-rose-800/40"
           )}>
             <div className="flex items-center gap-2">
               {isPositive ? (
-                <TrendingUp className="h-4 w-4 text-green-500" />
+                <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               ) : (
-                <TrendingDown className="h-4 w-4 text-red-500" />
+                <TrendingDown className="h-4 w-4 text-rose-600 dark:text-rose-400" />
               )}
               <span className={cn(
-                "text-sm font-medium",
-                isPositive ? "text-green-700" : "text-red-700"
+                "text-xs font-semibold uppercase tracking-wider",
+                isPositive ? "text-emerald-700 dark:text-emerald-300" : "text-rose-700 dark:text-rose-300"
               )}>Net Balance</span>
             </div>
             <div className={cn(
-              "mt-2 text-2xl font-semibold",
-              isPositive ? "text-green-700" : "text-red-700"
+              "mt-2 text-2xl font-bold font-mono",
+              isPositive ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"
             )}>
-              {formatCurrency(Math.abs(netAmount))}
+              {netAmount < 0 ? `-${formatCurrency(Math.abs(netAmount))}` : formatCurrency(netAmount)}
             </div>
           </div>
         </div>
@@ -269,7 +265,7 @@ const AccountChart = ({ transactions, isLoading }) => {
                 contentStyle={{ fontSize: chartConfig.tooltipFontSize }}
                 cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }}
               />
-              <Legend />
+              <Legend verticalAlign="top" height={36} wrapperStyle={{ paddingBottom: "10px" }} />
               <Bar
                 dataKey="income"
                 name="Income"

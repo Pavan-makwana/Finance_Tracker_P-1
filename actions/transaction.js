@@ -163,21 +163,45 @@ export async function updateTransaction(id, data) {
         },
       });
 
-      // Update account balance
-      await tx.account.update({
-        where: { id: data.accountId },
-        data: {
-          balance: {
-            increment: netBalanceChange,
+      if (originalTransaction.accountId === data.accountId) {
+        // Same account: apply the net difference
+        await tx.account.update({
+          where: { id: data.accountId },
+          data: {
+            balance: {
+              increment: netBalanceChange,
+            },
           },
-        },
-      });
+        });
+      } else {
+        // Changed account: revert old transaction on old account, apply new transaction on new account
+        await tx.account.update({
+          where: { id: originalTransaction.accountId },
+          data: {
+            balance: {
+              increment: -oldBalanceChange,
+            },
+          },
+        });
+
+        await tx.account.update({
+          where: { id: data.accountId },
+          data: {
+            balance: {
+              increment: newBalanceChange,
+            },
+          },
+        });
+      }
 
       return updated;
     });
 
     revalidatePath("/dashboard");
     revalidatePath(`/account/${data.accountId}`);
+    if (originalTransaction.accountId !== data.accountId) {
+      revalidatePath(`/account/${originalTransaction.accountId}`);
+    }
 
     return { success: true, data: serializeAmount(transaction) };
   } catch (error) {

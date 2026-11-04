@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Pencil, Check, X } from "lucide-react";
+import { Pencil, Check, X, AlertTriangle, AlertCircle, CheckCircle2 } from "lucide-react";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import {
   Card,
@@ -15,13 +16,15 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { updateBudget } from "@/actions/budget";
 
-export function BudgetProgress({ initialBudget, currentExpenses }) {
+export function BudgetProgress({ initialBudget, currentExpenses = 0 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newBudget, setNewBudget] = useState(
     initialBudget?.amount?.toString() || ""
   );
+  const router = useRouter();
 
   const {
     loading: isLoading,
@@ -30,15 +33,16 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
     error,
   } = useFetch(updateBudget);
 
-  const percentUsed = initialBudget
-    ? Math.min((currentExpenses / initialBudget.amount) * 100, 100)
+  const budgetAmount = initialBudget?.amount || 0;
+  const percentUsed = budgetAmount > 0
+    ? (currentExpenses / budgetAmount) * 100
     : 0;
 
   const handleUpdateBudget = async () => {
     const amount = parseFloat(newBudget);
 
     if (isNaN(amount) || amount <= 0) {
-      toast.error("Please enter a valid amount");
+      toast.error("Please enter a valid positive amount");
       return;
     }
 
@@ -53,9 +57,10 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
   useEffect(() => {
     if (updatedBudget?.success) {
       setIsEditing(false);
-      toast.success("Budget updated successfully");
+      toast.success("Monthly budget updated successfully");
+      router.refresh();
     }
-  }, [updatedBudget]);
+  }, [updatedBudget, router]);
 
   useEffect(() => {
     if (error) {
@@ -63,79 +68,119 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
     }
   }, [error]);
 
+  const getStatusBadge = () => {
+    if (!initialBudget) return null;
+    if (percentUsed >= 100) {
+      return (
+        <Badge variant="destructive" className="gap-1 bg-red-100 text-red-700 hover:bg-red-200 border-red-200">
+          <AlertCircle className="w-3.5 h-3.5" />
+          Budget Exceeded
+        </Badge>
+      );
+    }
+    if (percentUsed >= 80) {
+      return (
+        <Badge className="gap-1 bg-amber-100 text-amber-800 hover:bg-amber-200 border-amber-200">
+          <AlertTriangle className="w-3.5 h-3.5" />
+          Nearing Limit ({percentUsed.toFixed(0)}%)
+        </Badge>
+      );
+    }
+    return (
+      <Badge className="gap-1 bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border-emerald-200">
+        <CheckCircle2 className="w-3.5 h-3.5" />
+        On Track
+      </Badge>
+    );
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex-1">
-          <CardTitle className="text-sm font-medium">
-            Account Balance & Expenses
-          </CardTitle>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="flex items-center justify-between pr-2">
+            <CardTitle className="text-base font-semibold">
+              Monthly Budget & Expenses
+            </CardTitle>
+            {getStatusBadge()}
+          </div>
+          <div className="flex items-center gap-2 mt-2">
             {isEditing ? (
               <div className="flex items-center gap-2">
-                <Input
-                  type="number"
-                  value={newBudget}
-                  onChange={(e) => setNewBudget(e.target.value)}
-                  className="w-32"
-                  placeholder="Enter amount"
-                  autoFocus
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <span className="absolute left-2.5 top-2 text-sm text-gray-500">₹</span>
+                  <Input
+                    type="number"
+                    value={newBudget}
+                    onChange={(e) => setNewBudget(e.target.value)}
+                    className="w-36 pl-6 h-9"
+                    placeholder="e.g. 25000"
+                    autoFocus
+                    disabled={isLoading}
+                  />
+                </div>
                 <Button
-                  variant="ghost"
-                  size="icon"
+                  variant="outline"
+                  size="sm"
                   onClick={handleUpdateBudget}
                   disabled={isLoading}
+                  className="h-9 px-3"
                 >
-                  <Check className="h-4 w-4 text-green-500" />
+                  <Check className="h-4 w-4 text-green-600" />
                 </Button>
                 <Button
                   variant="ghost"
-                  size="icon"
+                  size="sm"
                   onClick={handleCancel}
                   disabled={isLoading}
+                  className="h-9 px-3"
                 >
                   <X className="h-4 w-4 text-red-500" />
                 </Button>
               </div>
             ) : (
-              <>
-                <CardDescription>
+              <div className="flex items-center gap-2">
+                <CardDescription className="text-sm">
                   {initialBudget
-                    ? `₹${currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })} spent of ₹${initialBudget.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })} budget`
-                    : "No transactions yet"}
+                    ? `₹${currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })} spent of ₹${budgetAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })} limit this month`
+                    : "No monthly budget limit set yet"}
                 </CardDescription>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsEditing(true)}
-                  className="h-6 w-6"
+                  className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                  title="Edit monthly budget"
                 >
-                  <Pencil className="h-3 w-3" />
+                  <Pencil className="h-3.5 w-3.5" />
                 </Button>
-              </>
+              </div>
             )}
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        {initialBudget && (
-          <div className="space-y-2">
+        {initialBudget ? (
+          <div className="space-y-2 pt-2">
             <Progress
-              value={percentUsed}
+              value={Math.min(percentUsed, 100)}
+              className="h-2.5"
               extraStyles={
-                percentUsed >= 90
+                percentUsed >= 100
                   ? "bg-red-500"
-                  : percentUsed >= 75
-                    ? "bg-yellow-500"
-                    : "bg-green-500"
+                  : percentUsed >= 80
+                    ? "bg-amber-500"
+                    : "bg-emerald-500"
               }
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Total Expenses: ₹{currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-              <span>{percentUsed.toFixed(1)}% of balance used</span>
+            <div className="flex justify-between text-xs text-muted-foreground pt-1">
+              <span>This Month: ₹{currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+              <span>{percentUsed.toFixed(1)}% used</span>
             </div>
+          </div>
+        ) : (
+          <div className="text-xs text-muted-foreground pt-1">
+            Tip: Click the pencil icon above to set a target monthly limit and track your progress.
           </div>
         )}
       </CardContent>

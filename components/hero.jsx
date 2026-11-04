@@ -48,7 +48,7 @@ const HeroSection = () => {
             src="/banner.jpeg"
             width={1180}
             height={620}
-            alt="Dashboard preview"
+            alt="Personal Finance Intelligence Platform Preview"
             className="rounded-lg shadow-2xl border mx-auto"
             priority
           />

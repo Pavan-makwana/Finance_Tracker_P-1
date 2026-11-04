@@ -23,34 +23,37 @@ export async function getCurrentBudget(accountId) {
       throw new Error("User not found");
     }
 
-    // Get account details
-    const account = await db.account.findUnique({
-      where: { id: accountId },
+    // Get user's saved monthly budget
+    const budget = await db.budget.findUnique({
+      where: { userId: user.id },
     });
 
-    if (!account) {
-      throw new Error("Account not found");
-    }
+    // Calculate current month's start date for current month budget tracking
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    // Get total expenses for this account
+    // Get total monthly expenses for this account
     const totalExpenses = await db.transaction.aggregate({
       where: {
         userId: user.id,
         type: "EXPENSE",
-        accountId,
+        ...(accountId ? { accountId } : {}),
+        date: {
+          gte: startOfMonth,
+        },
       },
       _sum: {
         amount: true,
       },
     });
 
-    const accountBalance = account.balance.toNumber();
-    const expenses = totalExpenses._sum.amount ? Math.abs(totalExpenses._sum.amount.toNumber()) : 0;
+    const expenses = totalExpenses._sum.amount
+      ? Math.abs(totalExpenses._sum.amount.toNumber())
+      : 0;
 
     return {
-      budget: account ? { amount: accountBalance } : null,
+      budget: budget ? { ...budget, amount: budget.amount.toNumber() } : null,
       currentExpenses: expenses,
-      accountBalance: accountBalance
     };
   } catch (error) {
     if (error?.digest === "DYNAMIC_SERVER_USAGE") {
