@@ -30,16 +30,16 @@ export function LanguageProvider({ children }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedLang = localStorage.getItem("vaultix_lang");
+    const savedLang = localStorage.getItem("finora_lang") || localStorage.getItem("vaultix_lang");
     if (savedLang && translations[savedLang]) {
       setLanguageState(savedLang);
     }
-    const savedCurr = localStorage.getItem("vaultix_curr");
+    const savedCurr = localStorage.getItem("finora_curr") || localStorage.getItem("vaultix_curr");
     if (savedCurr && CURRENCY_CONFIG[savedCurr]) {
       setCurrencyState(savedCurr);
     }
     // Check if first-time user for onboarding
-    const seenOnboarding = localStorage.getItem("vaultix_onboarding_seen");
+    const seenOnboarding = localStorage.getItem("finora_onboarding_seen") || localStorage.getItem("vaultix_onboarding_seen");
     if (!seenOnboarding) {
       // Auto open onboarding on first visit after brief delay
       const timer = setTimeout(() => setIsOnboardingOpen(true), 800);
@@ -50,21 +50,21 @@ export function LanguageProvider({ children }) {
   const setLanguage = (lang) => {
     if (translations[lang]) {
       setLanguageState(lang);
-      localStorage.setItem("vaultix_lang", lang);
+      localStorage.setItem("finora_lang", lang);
     }
   };
 
   const setCurrency = (curr) => {
     if (CURRENCY_CONFIG[curr]) {
       setCurrencyState(curr);
-      localStorage.setItem("vaultix_curr", curr);
+      localStorage.setItem("finora_curr", curr);
     }
   };
 
   const openOnboarding = () => setIsOnboardingOpen(true);
   const closeOnboarding = () => {
     setIsOnboardingOpen(false);
-    localStorage.setItem("vaultix_onboarding_seen", "true");
+    localStorage.setItem("finora_onboarding_seen", "true");
   };
 
   const t = (key) => {

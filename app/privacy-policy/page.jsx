@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Lock, EyeOff, Server, Database } from "lucide-react";
 
 export const metadata = {
-  title: "Privacy Policy | Vaultix",
-  description: "Learn how Vaultix protects and encrypts your personal financial data.",
+  title: "Privacy Policy | Finora",
+  description: "Learn how Finora protects and encrypts your personal financial data.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
           <Lock className="w-6 h-6 text-blue-500" />
           <h3 className="font-bold text-sm">No Banking Passwords</h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Vaultix never asks for, captures, or stores your net-banking passwords, UPI PINs, or debit/credit card numbers.
+            Finora never asks for, captures, or stores your net-banking passwords, UPI PINs, or debit/credit card numbers.
           </p>
         </div>
         <div className="p-5 rounded-2xl border border-border/80 bg-card/60 space-y-2">
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-foreground">1. Information We Collect</h2>
           <p>
-            When you create an account with Vaultix, we collect basic profile information through our identity provider (Clerk), including your name and email address. When using the expense tracking tools, you may voluntarily record account titles (e.g., "HDFC Savings"), transactions (amounts, categories, dates, and optional notes), and monthly budget limits.
+            When you create an account with Finora, we collect basic profile information through our identity provider (Clerk), including your name and email address. When using the expense tracking tools, you may voluntarily record account titles (e.g., "HDFC Savings"), transactions (amounts, categories, dates, and optional notes), and monthly budget limits.
           </p>
         </section>
 
@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-foreground">5. Contact Information</h2>
           <p>
-            If you have questions regarding this Privacy Policy or wish to request data deletion, contact our privacy engineering team at <span className="font-mono text-primary font-semibold">privacy@vaultix.app</span>.
+            If you have questions regarding this Privacy Policy or wish to request data deletion, contact our privacy engineering team at <span className="font-mono text-primary font-semibold">privacy@Finora.app</span>.
           </p>
         </section>
       </div>

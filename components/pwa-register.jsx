@@ -66,7 +66,7 @@ export function PwaRegister() {
             <Download className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-foreground">Install Vaultix App</h4>
+            <h4 className="text-sm font-bold text-foreground">Install Finora App</h4>
             <p className="text-xs text-muted-foreground mt-0.5">
               Add to home screen for instant offline access and native experience.
             </p>

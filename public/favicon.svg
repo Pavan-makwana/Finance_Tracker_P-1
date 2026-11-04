@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="finoraGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="64" height="64" rx="18" fill="#0f172a" />
+  <rect width="60" height="60" x="2" y="2" rx="16" stroke="url(#finoraGlow)" stroke-width="1.5" stroke-opacity="0.5" />
+
+  <!-- Outer Prosperity Arc -->
+  <path d="M16 34C16 23.5066 24.5066 15 35 15C42.8256 15 49.524 19.7289 52.3486 26.5" 
+        stroke="url(#finoraGlow)" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- Infinity Coin Nodes -->
+  <circle cx="25" cy="38" r="9" stroke="#3b82f6" stroke-width="4" stroke-opacity="0.9" />
+  <circle cx="39" cy="38" r="9" stroke="#10b981" stroke-width="4" stroke-opacity="0.9" />
+
+  <!-- Center Ascending Prosperity Spark -->
+  <path d="M32 18L37 25H27L32 18Z" fill="#06b6d4" filter="url(#softGlow)" />
+  <circle cx="32" cy="38" r="3" fill="#ffffff" />
+</svg>

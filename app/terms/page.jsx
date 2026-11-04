@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowLeft, FileText, CheckCircle2 } from "lucide-react";
 
 export const metadata = {
-  title: "Terms of Service | Vaultix",
-  description: "Terms and conditions for utilizing the Vaultix financial operating system.",
+  title: "Terms of Service | Finora",
+  description: "Terms and conditions for utilizing the Finora financial operating system.",
 };
 
 export default function TermsPage() {
@@ -35,14 +35,14 @@ export default function TermsPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-foreground">1. Acceptance of Terms</h2>
           <p>
-            By accessing or using Vaultix (the "Service"), whether via web browser or mobile application, you agree to be bound by these Terms of Service. If you do not agree to all terms, do not access or use the Service.
+            By accessing or using Finora (the "Service"), whether via web browser or mobile application, you agree to be bound by these Terms of Service. If you do not agree to all terms, do not access or use the Service.
           </p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-foreground">2. Financial Disclaimer</h2>
           <p>
-            Vaultix is a financial tracking, budgeting, and informational software tool. Vaultix does not provide registered financial, investment, legal, or tax advice. Calculations, wealth simulations, and budget projections are provided for self-service informational planning purposes only.
+            Finora is a financial tracking, budgeting, and informational software tool. Finora does not provide registered financial, investment, legal, or tax advice. Calculations, wealth simulations, and budget projections are provided for self-service informational planning purposes only.
           </p>
         </section>
 
@@ -63,7 +63,7 @@ export default function TermsPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-foreground">5. Termination & Continuity</h2>
           <p>
-            You may discontinue using Vaultix at any time and export or delete your stored records. Vaultix reserves the right to suspend accounts violating these terms or engaging in malicious misuse.
+            You may discontinue using Finora at any time and export or delete your stored records. Finora reserves the right to suspend accounts violating these terms or engaging in malicious misuse.
           </p>
         </section>
       </div>

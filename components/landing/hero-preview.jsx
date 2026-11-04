@@ -29,7 +29,7 @@ export function HeroPreview() {
             <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
             <span className="ml-3 text-xs font-mono text-muted-foreground hidden sm:inline">
-              vaultix.app/dashboard
+              finora.app/dashboard
             </span>
           </div>
 

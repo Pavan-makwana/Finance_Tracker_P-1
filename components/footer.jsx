@@ -75,7 +75,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {currentYear} Vaultix. {t("all_rights_reserved")}</p>
+          <p>© {currentYear} Finora. {t("all_rights_reserved")}</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="hover:underline">
               {t("privacy_policy")}

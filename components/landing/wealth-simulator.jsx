@@ -39,7 +39,7 @@ export function WealthSimulator() {
             <Sparkles className="w-3.5 h-3.5" /> {t("sim_badge")}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
-            {t("sim_title")} <span className="gradient-title">Vaultix</span>
+            {t("sim_title")} <span className="gradient-title">Finora</span>
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
             {t("sim_subtitle")}
@@ -107,7 +107,7 @@ export function WealthSimulator() {
                 <Shield className="w-3.5 h-3.5 text-blue-500" /> Smart Rule 50/30/20:
               </p>
               <p>
-                Allocate 50% for Needs, 30% for Wants, and 20% for Savings & Investments. Vaultix tracks your budget automatically.
+                Allocate 50% for Needs, 30% for Wants, and 20% for Savings & Investments. Finora tracks your budget automatically.
               </p>
             </div>
           </div>

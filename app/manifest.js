@@ -1,8 +1,8 @@
 export default function manifest() {
   return {
-    name: "Vaultix - Smart Wealth & Expense Operating System",
-    short_name: "Vaultix",
-    description: "Intelligent personal finance and wealth management system to track expenses, set budgets, and build compounding wealth.",
+    name: "Finora - Finance for Real Humans",
+    short_name: "Finora",
+    description: "Finance made simple. 1-tap tracking, daily safe limits, 'Can I Afford It?' calculator, and automated bank statements.",
     start_url: "/dashboard",
     display: "standalone",
     background_color: "#ffffff",

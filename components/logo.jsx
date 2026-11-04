@@ -19,18 +19,18 @@ export function BrandLogo({
 
   return (
     <div className={cn("inline-flex items-center gap-2.5 select-none group", className)}>
-      {/* Animated Icon Symbol */}
+      {/* Animated Emblem Symbol */}
       <div
         className={cn(
-          "relative flex items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 p-0.5 shadow-md shadow-indigo-500/20 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all duration-300",
+          "relative flex items-center justify-center rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-emerald-500 p-0.5 shadow-md shadow-cyan-500/20 group-hover:shadow-cyan-500/40 group-hover:scale-105 transition-all duration-300",
           currentSize.icon
         )}
       >
-        {/* Inner SVG Geometric Crest */}
-        <div className="w-full h-full rounded-[10px] bg-background/90 dark:bg-slate-950/90 flex items-center justify-center p-1.5 backdrop-blur-sm overflow-hidden relative">
+        {/* Inner Emblem Glass */}
+        <div className="w-full h-full rounded-[14px] bg-background/95 dark:bg-slate-950/95 flex items-center justify-center p-1.5 backdrop-blur-md overflow-hidden relative">
           {/* Subtle Ambient Rotation Glow */}
           {animated && (
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-transparent to-purple-500/30 animate-[spin_6s_linear_infinite] opacity-60 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/25 via-transparent to-emerald-500/25 animate-[spin_8s_linear_infinite] opacity-70 pointer-events-none" />
           )}
 
           <svg
@@ -39,25 +39,34 @@ export function BrandLogo({
             xmlns="http://www.w3.org/2000/svg"
             className="w-full h-full relative z-10 drop-shadow-xs"
           >
-            {/* Outer Diamond Shield */}
+            {/* Prosperity Arch */}
             <path
-              d="M12 2L3 7V13C3 18.2 7 21.6 12 22.5C17 21.6 21 18.2 21 13V7L12 2Z"
+              d="M5 12C5 8.13401 8.13401 5 12 5C14.887 5 17.3571 6.74438 18.4 9.2"
+              className="stroke-cyan-500 dark:stroke-cyan-400"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            {/* Intersecting Wealth Rings */}
+            <circle
+              cx="9"
+              cy="14"
+              r="4"
               className="stroke-blue-600 dark:stroke-blue-400"
               strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
             />
-            {/* Inner Vault Nodes */}
-            <path
-              d="M12 7L16 11L12 15L8 11L12 7Z"
-              className="fill-indigo-600 dark:fill-indigo-400 opacity-90"
+            <circle
+              cx="15"
+              cy="14"
+              r="4"
+              className="stroke-emerald-500 dark:stroke-emerald-400"
+              strokeWidth="1.8"
             />
-            {/* Central Pulse Dot */}
+            {/* Center Core Spark */}
             <circle
               cx="12"
-              cy="11"
-              r="1.8"
-              className="fill-emerald-400 animate-pulse"
+              cy="14"
+              r="1.4"
+              className="fill-cyan-400 animate-pulse"
             />
           </svg>
         </div>
@@ -67,17 +76,17 @@ export function BrandLogo({
       {showText && (
         <div className="flex items-center tracking-tight">
           <span className={cn("font-black tracking-tight text-foreground", currentSize.text)}>
-            Vault
+            Fin
           </span>
           <span
             className={cn(
-              "font-black tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent",
+              "font-black tracking-tight bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500 bg-clip-text text-transparent",
               currentSize.text
             )}
           >
-            ix
+            ora
           </span>
-          <span className={cn("rounded-full bg-emerald-500 ml-0.5 animate-pulse shrink-0", currentSize.dot)} />
+          <span className={cn("rounded-full bg-emerald-400 ml-1 animate-pulse shrink-0 shadow-xs shadow-emerald-400/80", currentSize.dot)} />
         </div>
       )}
     </div>

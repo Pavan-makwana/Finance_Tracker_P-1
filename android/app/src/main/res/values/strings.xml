@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Vaultix</string>
-    <string name="title_activity_main">Vaultix</string>
-    <string name="package_name">com.vaultix.finance</string>
-    <string name="custom_url_scheme">com.vaultix.finance</string>
+    <string name="app_name">Finora</string>
+    <string name="title_activity_main">Finora</string>
+    <string name="package_name">com.finora.finance</string>
+    <string name="custom_url_scheme">com.finora.finance</string>
 </resources>

@@ -131,10 +131,13 @@
 
 @layer utilities {
   .gradient {
-    @apply bg-gradient-to-br from-blue-600 to-purple-600;
+    @apply bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500;
   }
   .gradient-title {
-    @apply bg-gradient-to-br from-blue-600 to-purple-600 bg-clip-text text-transparent font-extrabold tracking-tighter pr-2 pb-2;
+    @apply bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500 bg-clip-text text-transparent font-black tracking-tighter pr-2 pb-1;
+  }
+  .finora-glass {
+    @apply rounded-3xl border border-border/80 bg-card/85 backdrop-blur-xl shadow-xs transition-all duration-300 hover:shadow-md hover:border-primary/40;
   }
 }
 

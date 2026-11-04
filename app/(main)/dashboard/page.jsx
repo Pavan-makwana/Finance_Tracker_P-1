@@ -4,9 +4,12 @@ import { AccountCard } from "./_components/account-card";
 import { CreateAccountDrawer } from "@/components/create-account-drawer";
 import { DashboardOverview } from "./_components/transaction-overview";
 import { FinancialHealthCard } from "@/components/dashboard/financial-health-card";
+import { DailyFuelCard } from "@/components/dashboard/daily-fuel-card";
+import { CanIAffordItCard } from "@/components/dashboard/can-i-afford-it-card";
+import { SmartStatementDropzone } from "@/components/dashboard/smart-statement-dropzone";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, PenBox, Wallet, Sparkles } from "lucide-react";
+import { Plus, PenBox, Wallet, Sparkles, HelpCircle } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -49,28 +52,28 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="space-y-10 pb-12">
+    <div className="space-y-8 pb-16">
       {/* Dashboard Top Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/50">
         <div>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight gradient-title">
-            Financial Dashboard
+            Finora Cockpit
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Real-time wealth tracking, health pulse, and multi-account overview.
+            Zero financial anxiety. 1-tap tracking, daily limits, and compounding wealth.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <CreateAccountDrawer>
-            <Button variant="outline" size="sm" className="h-9 gap-1.5 shadow-xs">
+            <Button variant="outline" size="sm" className="h-9 gap-1.5 shadow-xs rounded-xl">
               <Wallet className="w-4 h-4 text-primary" />
               <span className="hidden sm:inline">Add Account</span>
             </Button>
           </CreateAccountDrawer>
 
           <Link href="/transaction/create">
-            <Button size="sm" className="h-9 gap-1.5 shadow-xs bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
+            <Button size="sm" className="h-9 gap-1.5 shadow-xs bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-xl">
               <PenBox className="w-4 h-4" />
               <span>Add Transaction</span>
             </Button>
@@ -78,11 +81,29 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* SECTION 1: Key Financial Metrics (5 Overview Cards) */}
+      {/* 1. TODAY'S DAILY SAFE-TO-SPEND LIMIT (Fuel Gauge for Normal Humans) */}
+      <section>
+        <DailyFuelCard
+          accounts={accounts}
+          transactions={transactions}
+          budgetAmount={budgetData?.budget?.amount || 0}
+        />
+      </section>
+
+      {/* 2. "CAN I AFFORD IT?" INSTANT DECISION ENGINE */}
+      <section>
+        <CanIAffordItCard
+          accounts={accounts}
+          transactions={transactions}
+          budgetAmount={budgetData?.budget?.amount || 0}
+        />
+      </section>
+
+      {/* 3. KEY METRICS: 5 Overview Cards */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" /> Financial Overview
+            <Sparkles className="w-4 h-4 text-cyan-500" /> Financial Overview
           </h2>
         </div>
         <DashboardOverview
@@ -93,7 +114,7 @@ export default async function DashboardPage() {
         />
       </section>
 
-      {/* SECTION 2: Financial Health Score & Fast Logging Shortcuts */}
+      {/* 4. FINANCIAL HEALTH PULSE & 1-TAP FAST LOGGING SHORTCUTS */}
       <section>
         <FinancialHealthCard
           totalNetWorth={totalNetWorth}
@@ -103,7 +124,12 @@ export default async function DashboardPage() {
         />
       </section>
 
-      {/* SECTION 3: Your Accounts Grid */}
+      {/* 5. SMART STATEMENT & RECEIPT DROPZONE (Zero-Typing Ingestion) */}
+      <section>
+        <SmartStatementDropzone defaultAccountId={defaultAccount?.id} />
+      </section>
+
+      {/* 6. YOUR CONNECTED ACCOUNTS GRID */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -121,7 +147,7 @@ export default async function DashboardPage() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <CreateAccountDrawer>
-            <Card className="hover:shadow-md transition-all cursor-pointer border-dashed border-2 hover:border-primary/50 group bg-card/50">
+            <Card className="hover:shadow-md transition-all cursor-pointer border-dashed border-2 hover:border-primary/50 group bg-card/50 rounded-2xl">
               <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full min-h-[190px] pt-6">
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <Plus className="h-6 w-6" />

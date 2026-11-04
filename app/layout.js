@@ -16,48 +16,52 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 export const metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: "Vaultix - Smart Wealth & Expense Operating System",
-    template: "%s | Vaultix",
+    default: "Finora - Finance for Real Humans | 1-Tap Wealth Tracking",
+    template: "%s | Finora",
   },
   description:
-    "Track expenses, manage monthly budgets, analyze multi-account cash flows, and build compounding wealth with real-time intelligence.",
+    "Zero financial jargon. 1-tap expense logging, daily safe-to-spend limits, 'Can I Afford It?' calculator, and automated bank statement imports.",
   keywords: [
-    "vaultix",
+    "finora",
     "personal finance",
-    "expense tracker",
-    "wealth management",
-    "budget planner",
-    "cash flow analytics",
-    "financial intelligence",
+    "simple expense tracker",
+    "budget calculator",
+    "can i afford it",
+    "wealth tracker",
+    "daily spend limit",
   ],
-  authors: [{ name: "Vaultix" }],
-  creator: "Vaultix",
+  authors: [{ name: "Finora" }],
+  creator: "Finora",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: appUrl,
-    title: "Vaultix - Smart Wealth & Expense Operating System",
+    title: "Finora - Finance for Real Humans | 1-Tap Wealth Tracking",
     description:
-      "Master your money. Track multi-account balances, set spending guardrails, and grow your net savings effortlessly.",
-    siteName: "Vaultix",
+      "Finance made so simple anyone can master it. Track spending in 1 tap, get daily safe allowances, and grow your wealth effortlessly.",
+    siteName: "Finora",
     images: [
       {
         url: "/banner.jpeg",
         width: 1200,
         height: 630,
-        alt: "Vaultix Financial Dashboard Preview",
+        alt: "Finora Smart Financial Dashboard",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vaultix - Smart Wealth & Expense Operating System",
+    title: "Finora - Finance for Real Humans",
     description:
-      "Master your money. Track multi-account balances, set spending guardrails, and grow your net savings effortlessly.",
+      "Finance made so simple anyone can master it. Track spending in 1 tap, get daily safe allowances, and grow your wealth effortlessly.",
     images: ["/banner.jpeg"],
   },
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico" },
+      { url: "/logo.png" },
+    ],
     apple: "/logo.png",
   },
   manifest: "/manifest.webmanifest",
@@ -73,11 +77,11 @@ export const viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Vaultix",
+  name: "Finora",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web, iOS, Android",
   description:
-    "Intelligent personal wealth and cash flow operating system that helps you track, analyze, and optimize your spending with real-time insights.",
+    "Finance for real humans. 1-tap logging, daily safe limits, 'Can I Afford It?' decision engine, and automated wealth tracking.",
   offers: {
     "@type": "Offer",
     price: "0",

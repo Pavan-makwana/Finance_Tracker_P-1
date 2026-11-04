@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.vaultix.finance',
-  appName: 'Vaultix',
+  appId: 'com.finora.finance',
+  appName: 'Finora',
   webDir: 'public',
   server: {
     // In local development, points to your Next.js dev server on your network IP

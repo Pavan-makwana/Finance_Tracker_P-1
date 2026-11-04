@@ -1,5 +1,5 @@
-// Vaultix Service Worker
-const CACHE_NAME = "vaultix-cache-v1";
+// Finora Service Worker
+const CACHE_NAME = "finora-cache-v1";
 const STATIC_ASSETS = [
   "/",
   "/manifest.webmanifest",
