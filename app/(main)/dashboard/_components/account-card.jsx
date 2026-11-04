@@ -6,23 +6,19 @@ import { ArrowDownRight, ArrowUpRight, Plus } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import { updateDefaultAccount } from '@/actions/accounts';
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch } from "@/components/ui/switch";
-
-// Format currency in Indian Rupees
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',  
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(amount);
-};
+import { useLanguage } from "@/components/language-provider";
 
 export function AccountCard({ account, isAddCard }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDefault, setIsDefault] = useState(account?.isDefault || false);
   const router = useRouter();
+  const { formatAmount } = useLanguage();
+
+  useEffect(() => {
+    setIsDefault(account?.isDefault || false);
+  }, [account?.isDefault]);
 
   const handleDefaultChange = async () => {
     if (account.isDefault) {
@@ -79,7 +75,7 @@ export function AccountCard({ account, isAddCard }) {
 
           <div className="mt-4">
             <div className="flex items-center gap-2">
-              <p className="text-2xl font-bold">{formatCurrency(account.balance)}</p>
+              <p className="text-2xl font-bold">{formatAmount(account.balance)}</p>
               {account.isDefault && (
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">Default</span>
               )}

@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { BrandLogo } from "@/components/logo";
+import { useLanguage } from "@/components/language-provider";
+import { ShieldCheck, Lock } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="border-t border-border/60 bg-muted/20">
@@ -14,29 +19,29 @@ export default function Footer() {
               <BrandLogo size="md" animated={false} />
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm">
-              Vaultix is an intelligent personal wealth and cash flow operating system designed to give you clarity, eliminate financial leaks, and compound your wealth.
+              {t("footer_desc")}
             </p>
           </div>
 
           {/* Quick Navigation */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">
-              Navigation
+              {t("nav_title")}
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/" className="hover:text-primary transition-colors">
-                  Home
+                  {t("nav_home")}
                 </Link>
               </li>
               <li>
                 <Link href="/dashboard" className="hover:text-primary transition-colors">
-                  Dashboard
+                  {t("nav_dashboard")}
                 </Link>
               </li>
               <li>
                 <Link href="/transaction/create" className="hover:text-primary transition-colors">
-                  Add Transaction
+                  {t("nav_add_tx")}
                 </Link>
               </li>
             </ul>
@@ -45,16 +50,24 @@ export default function Footer() {
           {/* Legal & Security */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">
-              Security & Privacy
+              {t("sec_title")}
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <span className="text-xs inline-flex items-center px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 font-medium">
-                  Bank-Grade Encryption
+                <span className="text-xs inline-flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5" /> {t("sec_badge")}
                 </span>
               </li>
-              <li className="text-xs text-muted-foreground">
-                Your financial data is encrypted and completely confidential.
+              <li className="text-xs text-muted-foreground leading-relaxed">
+                {t("sec_desc")}
+              </li>
+              <li className="pt-2 flex flex-col gap-1.5">
+                <Link href="/privacy-policy" className="text-xs text-primary hover:underline flex items-center gap-1">
+                  <Lock className="w-3 h-3" /> {t("privacy_policy")}
+                </Link>
+                <Link href="/terms" className="text-xs text-muted-foreground hover:text-foreground hover:underline">
+                  {t("terms_of_service")}
+                </Link>
               </li>
             </ul>
           </div>
@@ -62,10 +75,16 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {currentYear} Vaultix. All rights reserved.</p>
-          <p>
-            Designed & Engineered with ❤️
-          </p>
+          <p>© {currentYear} Vaultix. {t("all_rights_reserved")}</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="hover:underline">
+              {t("privacy_policy")}
+            </Link>
+            <span>•</span>
+            <Link href="/terms" className="hover:underline">
+              {t("terms_of_service")}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

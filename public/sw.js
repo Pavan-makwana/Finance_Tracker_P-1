@@ -1,5 +1,5 @@
-// Welth Service Worker
-const CACHE_NAME = "welth-cache-v1";
+// Vaultix Service Worker
+const CACHE_NAME = "vaultix-cache-v1";
 const STATIC_ASSETS = [
   "/",
   "/manifest.webmanifest",

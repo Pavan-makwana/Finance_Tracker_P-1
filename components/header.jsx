@@ -1,17 +1,13 @@
 import {
   SignedIn,
-  SignedOut,
   UserButton,
-  SignInButton,
-  SignUpButton,
 } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { LayoutDashboard, PenBox } from "lucide-react";
 import Link from "next/link";
 import { checkUser } from "@/lib/checkuser";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { BrandLogo } from "@/components/logo";
+import { HeaderNav } from "@/components/header-nav";
 
 const Header = async () => {
   await checkUser();
@@ -26,34 +22,7 @@ const Header = async () => {
 
         {/* Navigation Controls */}
         <div className="flex items-center space-x-2 sm:space-x-3">
-          <SignedIn>
-            <Link href="/dashboard" className="transition-colors">
-              <Button variant="outline" size="sm" className="gap-2 h-9 text-xs sm:text-sm font-medium">
-                <LayoutDashboard size={15} />
-                <span className="hidden md:inline">Dashboard</span>
-              </Button>
-            </Link>
-
-            <Link href="/transaction/create">
-              <Button size="sm" className="gap-2 h-9 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm text-xs sm:text-sm font-semibold">
-                <PenBox size={15} />
-                <span className="hidden md:inline">Add Transaction</span>
-              </Button>
-            </Link>
-          </SignedIn>
-
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button variant="outline" size="sm" className="h-9 text-xs sm:text-sm">
-                Login
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button size="sm" className="h-9 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm text-xs sm:text-sm font-semibold">
-                Sign Up
-              </Button>
-            </SignUpButton>
-          </SignedOut>
+          <HeaderNav />
 
           {/* Multi-Language & Tour Switcher */}
           <LanguageSwitcher />

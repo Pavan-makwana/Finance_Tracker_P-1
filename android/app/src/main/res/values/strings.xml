@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Welth</string>
-    <string name="title_activity_main">Welth</string>
-    <string name="package_name">com.welth.finance</string>
-    <string name="custom_url_scheme">com.welth.finance</string>
+    <string name="app_name">Vaultix</string>
+    <string name="title_activity_main">Vaultix</string>
+    <string name="package_name">com.vaultix.finance</string>
+    <string name="custom_url_scheme">com.vaultix.finance</string>
 </resources>

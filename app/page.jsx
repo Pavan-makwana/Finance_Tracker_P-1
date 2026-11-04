@@ -1,11 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   Zap,
-  PieChart,
   Repeat,
   FileSpreadsheet,
   Layers,
@@ -17,8 +17,11 @@ import {
 import { HeroPreview } from "@/components/landing/hero-preview";
 import { WealthSimulator } from "@/components/landing/wealth-simulator";
 import { FaqAccordion } from "@/components/landing/faq-accordion";
+import { useLanguage } from "@/components/language-provider";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. HERO SECTION */}
@@ -30,21 +33,20 @@ export default function Home() {
           {/* Announcement Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs sm:text-sm font-medium mb-6 hover:bg-primary/10 transition-colors">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Vaultix 2.0 is live</span>
-            <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground font-normal">Next-Gen Wealth OS</span>
+            <span>{t("hero_badge")}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </div>
 
           {/* Main Title */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.08] mb-6">
-            Master Your Money with <br className="hidden sm:inline" />
-            <span className="gradient-title">Real-Time Intelligence</span>
+            {t("hero_title_1")}{" "}
+            <br className="hidden sm:inline" />
+            <span className="gradient-title">{t("hero_title_gradient")}</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
-            Stop losing track of subscriptions and fragmented bank balances. Vaultix gives you a unified cockpit to monitor multi-account cash flows, set spending guardrails, and build compounding wealth.
+            {t("hero_subtitle")}
           </p>
 
           {/* CTA Buttons */}
@@ -54,7 +56,7 @@ export default function Home() {
                 size="lg"
                 className="w-full sm:w-auto h-12 px-8 text-base font-semibold gap-2 shadow-lg hover:shadow-xl hover:scale-102 transition-all bg-primary text-primary-foreground"
               >
-                Start for Free <ArrowRight className="w-4 h-4" />
+                {t("start_free")} <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
             <Link href="/dashboard" className="w-full sm:w-auto">
@@ -63,7 +65,7 @@ export default function Home() {
                 variant="outline"
                 className="w-full sm:w-auto h-12 px-8 text-base font-medium border-border hover:bg-accent"
               >
-                View Live Demo
+                {t("live_demo")}
               </Button>
             </Link>
           </div>
@@ -71,13 +73,13 @@ export default function Home() {
           {/* Micro Trust Indicators */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground font-medium">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 100% Free Forever
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t("trust_free")}
             </span>
             <span className="flex items-center gap-1.5">
-              <Lock className="w-4 h-4 text-blue-500" /> Bank-Grade Privacy
+              <Lock className="w-4 h-4 text-blue-500" /> {t("trust_privacy")}
             </span>
             <span className="flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-amber-500" /> Instant Account Sync
+              <Zap className="w-4 h-4 text-amber-500" /> {t("trust_sync")}
             </span>
           </div>
 
@@ -92,34 +94,34 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-1">
               <p className="text-2xl sm:text-3xl font-black font-mono text-foreground">
-                ₹25 Cr+
+                {t("stat_tracked_val")}
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-                Money Tracked
+                {t("stat_tracked_lbl")}
               </p>
             </div>
             <div className="space-y-1">
               <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">
-                99.98%
+                {t("stat_accuracy_val")}
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-                Calculation Accuracy
+                {t("stat_accuracy_lbl")}
               </p>
             </div>
             <div className="space-y-1">
               <p className="text-2xl sm:text-3xl font-black font-mono text-foreground">
-                15,000+
+                {t("stat_transactions_val")}
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-                Smart Transactions
+                {t("stat_transactions_lbl")}
               </p>
             </div>
             <div className="space-y-1">
               <p className="text-2xl sm:text-3xl font-black font-mono text-amber-500">
-                4.9 / 5.0
+                {t("stat_rating_val")}
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-                User Satisfaction
+                {t("stat_rating_lbl")}
               </p>
             </div>
           </div>
@@ -131,13 +133,13 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center space-y-3 mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card text-xs font-semibold text-muted-foreground">
-              <Layers className="w-3.5 h-3.5 text-primary" /> Powerful Features
+              <Layers className="w-3.5 h-3.5 text-primary" /> {t("features_badge")}
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
-              Everything You Need for Complete Financial Freedom
+              {t("features_title")}
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
-              Engineered with clean architectural principles to eliminate financial anxiety and bring effortless clarity to your daily transactions.
+              {t("features_desc")}
             </p>
           </div>
 
@@ -148,20 +150,20 @@ export default function Home() {
                 <Layers className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-foreground">
-                Multi-Account Aggregation in One Single View
+                {t("bento1_title")}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Connect your Savings accounts, Checking accounts, Cash reserves, and investments. Switch your primary default account anytime with one tap, and get a total unified net worth calculation updated in real time.
+                {t("bento1_desc")}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 text-xs">
                 <span className="px-2.5 py-1 rounded-md bg-muted text-muted-foreground font-mono">
-                  Checking
+                  {t("bento1_badge1")}
                 </span>
                 <span className="px-2.5 py-1 rounded-md bg-muted text-muted-foreground font-mono">
-                  Savings
+                  {t("bento1_badge2")}
                 </span>
                 <span className="px-2.5 py-1 rounded-md bg-muted text-muted-foreground font-mono">
-                  Cash Wallets
+                  {t("bento1_badge3")}
                 </span>
               </div>
             </div>
@@ -172,26 +174,26 @@ export default function Home() {
                 <TrendingUp className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-foreground">
-                Smart Budget Guardrails
+                {t("bento2_title")}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Set monthly spending targets. Welth calculates your live utilization and alerts you before you exceed thresholds.
+                {t("bento2_desc")}
               </p>
               <div className="w-full bg-muted rounded-full h-2 mt-4 overflow-hidden">
                 <div className="bg-emerald-500 h-2 rounded-full w-[45%]" />
               </div>
             </div>
 
-            {/* Bento Card 3: Recurring Radar */}
+            {/* Bento Card 3: Subscription Radar */}
             <div className="p-6 sm:p-8 rounded-2xl border border-border/70 bg-card/60 backdrop-blur-sm space-y-4 hover:border-primary/50 transition-all shadow-xs hover:shadow-md">
               <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                 <Repeat className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-foreground">
-                Subscription Radar
+                {t("bento3_title")}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Flag daily, weekly, monthly, or yearly recurring commitments so you never forget an upcoming renewal or subscription.
+                {t("bento3_desc")}
               </p>
             </div>
 
@@ -201,10 +203,10 @@ export default function Home() {
                 <FileSpreadsheet className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-foreground">
-                Tax-Ready Data Exports
+                {t("bento4_title")}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Export clean, filtered CSV sheets with one click. Ready for Excel, Google Sheets, CA audits, and tax season.
+                {t("bento4_desc")}
               </p>
             </div>
 
@@ -214,10 +216,10 @@ export default function Home() {
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-foreground">
-                Zero Compromise Privacy
+                {t("bento5_title")}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Your data is never sold or shared. Encrypted storage with enterprise authentication keeps you entirely in control.
+                {t("bento5_desc")}
               </p>
             </div>
           </div>
@@ -232,10 +234,10 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center space-y-3 mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Get Started in Under 60 Seconds
+              {t("how_title")}
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              No complex setup, no tedious bank sync delays.
+              {t("how_subtitle")}
             </p>
           </div>
 
@@ -244,9 +246,9 @@ export default function Home() {
               <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground font-mono text-sm font-bold flex items-center justify-center">
                 1
               </div>
-              <h3 className="text-lg font-bold">Add Your Accounts</h3>
+              <h3 className="text-lg font-bold">{t("step1_title")}</h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Create your primary checking, savings, or cash accounts with their initial balances.
+                {t("step1_desc")}
               </p>
             </div>
 
@@ -254,9 +256,9 @@ export default function Home() {
               <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground font-mono text-sm font-bold flex items-center justify-center">
                 2
               </div>
-              <h3 className="text-lg font-bold">Log & Categorize</h3>
+              <h3 className="text-lg font-bold">{t("step2_title")}</h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Add incomes or expenses with fast category tags, calendar pickers, and recurring switches.
+                {t("step2_desc")}
               </p>
             </div>
 
@@ -264,9 +266,9 @@ export default function Home() {
               <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground font-mono text-sm font-bold flex items-center justify-center">
                 3
               </div>
-              <h3 className="text-lg font-bold">Gain Instant Clarity</h3>
+              <h3 className="text-lg font-bold">{t("step3_title")}</h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Monitor your cash flow charts, evaluate net savings, and hit your monthly budget goals effortlessly.
+                {t("step3_desc")}
               </p>
             </div>
           </div>
@@ -285,10 +287,10 @@ export default function Home() {
 
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
-                Ready to Take Control of Your Financial Future?
+                {t("cta_title")}
               </h2>
               <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
-                Join thousands of individuals and families who make informed financial decisions every day with Vaultix. Free forever, no commitments.
+                {t("cta_subtitle")}
               </p>
               <div className="pt-2">
                 <Link href="/dashboard">
@@ -296,7 +298,7 @@ export default function Home() {
                     size="lg"
                     className="bg-white text-blue-700 hover:bg-blue-50 font-bold px-9 py-6 text-base rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
                   >
-                    Open Vaultix Free <ArrowRight className="w-4 h-4 ml-1" />
+                    {t("cta_button")} <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>
                 </Link>
               </div>

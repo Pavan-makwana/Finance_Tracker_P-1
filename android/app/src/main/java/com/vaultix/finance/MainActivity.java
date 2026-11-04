@@ -1,4 +1,4 @@
-package com.welth.finance;
+package com.vaultix.finance;
 
 import com.getcapacitor.BridgeActivity;
 

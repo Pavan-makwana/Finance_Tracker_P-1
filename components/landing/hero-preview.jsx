@@ -6,14 +6,14 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Wallet,
-  ShieldCheck,
-  CreditCard,
   Target,
   Sparkles,
 } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
 
 export function HeroPreview() {
   const [activeTab, setActiveTab] = useState("overview");
+  const { t, formatAmount } = useLanguage();
 
   return (
     <div className="relative mx-auto max-w-5xl mt-12 w-full">
@@ -44,7 +44,7 @@ export function HeroPreview() {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Overview
+              {t("overview")}
             </button>
             <button
               type="button"
@@ -55,7 +55,7 @@ export function HeroPreview() {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Budget
+              {t("monthly_limit")}
             </button>
             <button
               type="button"
@@ -66,7 +66,7 @@ export function HeroPreview() {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Activity
+              {t("all_tx")}
             </button>
           </div>
         </div>
@@ -76,15 +76,15 @@ export function HeroPreview() {
           {/* Top Live Metrics Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* Total Balance */}
-            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30">
+            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30 text-left">
               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                <span className="font-medium">Total Balance</span>
+                <span className="font-medium">{t("total_amount")}</span>
                 <span className="text-emerald-500 font-semibold flex items-center">
                   <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> +14.2%
                 </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                ₹18,45,200.00
+              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight font-mono">
+                {formatAmount(1845200)}
               </div>
               <p className="text-[11px] text-muted-foreground mt-1 flex items-center gap-1">
                 <Wallet className="w-3 h-3 text-blue-500" /> 3 Accounts Connected
@@ -92,15 +92,15 @@ export function HeroPreview() {
             </div>
 
             {/* Monthly Inflow */}
-            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30">
+            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30 text-left">
               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                <span className="font-medium">Monthly Inflow</span>
+                <span className="font-medium">{t("monthly_income")}</span>
                 <span className="text-emerald-500 font-semibold flex items-center">
                   <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" /> On track
                 </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-600 dark:text-emerald-400">
-                ₹1,85,000.00
+              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-600 dark:text-emerald-400 font-mono">
+                {formatAmount(185000)}
               </div>
               <p className="text-[11px] text-muted-foreground mt-1">
                 Salary + Investments + Freelance
@@ -108,15 +108,15 @@ export function HeroPreview() {
             </div>
 
             {/* Monthly Budget Guardrail */}
-            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30">
+            <div className="p-4 rounded-xl border border-border/70 bg-gradient-to-br from-card to-muted/30 text-left">
               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                <span className="font-medium">Monthly Limit</span>
+                <span className="font-medium">{t("monthly_limit")}</span>
                 <span className="text-blue-500 font-semibold flex items-center">
                   <Target className="w-3.5 h-3.5 mr-0.5" /> 42% Used
                 </span>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                ₹65,000.00
+              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight font-mono">
+                {formatAmount(65000)}
               </div>
               <div className="w-full bg-muted rounded-full h-1.5 mt-2 overflow-hidden">
                 <div className="bg-gradient-to-r from-blue-500 to-indigo-600 h-1.5 rounded-full w-[42%]" />
@@ -128,18 +128,18 @@ export function HeroPreview() {
           {activeTab === "overview" && (
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
               {/* Cash Flow Graph Simulation */}
-              <div className="lg:col-span-3 p-4 rounded-xl border border-border/60 bg-muted/20">
+              <div className="lg:col-span-3 p-4 rounded-xl border border-border/60 bg-muted/20 text-left">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h4 className="text-sm font-semibold">Cash Flow Velocity</h4>
                     <p className="text-xs text-muted-foreground">Income vs Spending (Last 6 Months)</p>
                   </div>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 font-medium">
-                    Automated
+                    Live
                   </span>
                 </div>
 
-                {/* Simulated SVG Wave Chart */}
+                {/* Simulated Wave Chart */}
                 <div className="relative h-36 w-full flex items-end justify-between gap-2 pt-6">
                   {[
                     { month: "Jan", inc: 70, exp: 40 },
@@ -160,24 +160,24 @@ export function HeroPreview() {
                           className="w-1/2 max-w-[14px] bg-rose-500 rounded-t-sm transition-all duration-500 hover:brightness-110"
                         />
                       </div>
-                      <span className="text-[10px] text-muted-foreground">{item.month}</span>
+                      <span className="text-[10px] text-muted-foreground font-mono">{item.month}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Live Feeds */}
-              <div className="lg:col-span-2 p-4 rounded-xl border border-border/60 bg-muted/20 space-y-3">
+              <div className="lg:col-span-2 p-4 rounded-xl border border-border/60 bg-muted/20 space-y-3 text-left">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-semibold">Recent Transactions</h4>
+                  <h4 className="text-sm font-semibold">{t("all_tx")}</h4>
                   <span className="text-[11px] text-muted-foreground">Live feed</span>
                 </div>
 
                 <div className="space-y-2">
                   {[
-                    { title: "Salary Deposit", cat: "Income", val: "+₹1,25,000", isInc: true, time: "Today" },
-                    { title: "AWS Cloud Services", cat: "Business", val: "-₹3,450", isInc: false, time: "Yesterday" },
-                    { title: "Grocery Mart", cat: "Food", val: "-₹2,120", isInc: false, time: "Oct 28" },
+                    { title: "Salary Deposit", cat: "Income", val: `+${formatAmount(125000)}`, isInc: true, time: "Today" },
+                    { title: "AWS Cloud Services", cat: "Business", val: `-${formatAmount(3450)}`, isInc: false, time: "Yesterday" },
+                    { title: "Grocery Mart", cat: "Food", val: `-${formatAmount(2120)}`, isInc: false, time: "Oct 28" },
                   ].map((tx, idx) => (
                     <div
                       key={idx}
@@ -198,7 +198,11 @@ export function HeroPreview() {
                           <p className="text-[10px] text-muted-foreground">{tx.cat} • {tx.time}</p>
                         </div>
                       </div>
-                      <span className={`font-semibold ${tx.isInc ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
+                      <span
+                        className={`font-mono font-bold ${
+                          tx.isInc ? "text-emerald-600 dark:text-emerald-400" : "text-foreground"
+                        }`}
+                      >
                         {tx.val}
                       </span>
                     </div>
@@ -209,61 +213,24 @@ export function HeroPreview() {
           )}
 
           {activeTab === "budget" && (
-            <div className="p-6 rounded-xl border border-border/60 bg-muted/20 space-y-4">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-semibold">Budget Guardrails & Categories</h4>
-                <span className="text-xs text-muted-foreground">Auto-monitored</span>
-              </div>
-              <div className="space-y-3">
-                {[
-                  { name: "Housing & Rent", spent: 25000, limit: 30000, color: "bg-blue-500" },
-                  { name: "Food & Dining", spent: 12400, limit: 15000, color: "bg-emerald-500" },
-                  { name: "Entertainment & Subscriptions", spent: 4800, limit: 5000, color: "bg-amber-500" },
-                  { name: "Shopping & Travel", spent: 8500, limit: 12000, color: "bg-purple-500" },
-                ].map((cat, idx) => {
-                  const pct = Math.round((cat.spent / cat.limit) * 100);
-                  return (
-                    <div key={idx} className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="font-medium">{cat.name}</span>
-                        <span className="text-muted-foreground">₹{cat.spent.toLocaleString()} / ₹{cat.limit.toLocaleString()} ({pct}%)</span>
-                      </div>
-                      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                        <div className={`${cat.color} h-2 rounded-full`} style={{ width: `${Math.min(pct, 100)}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="p-6 rounded-xl border border-border/60 bg-muted/20 text-center space-y-3">
+              <Sparkles className="w-8 h-8 text-primary mx-auto" />
+              <h4 className="font-bold text-base">{t("bento2_title")}</h4>
+              <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+                {t("bento2_desc")}
+              </p>
             </div>
           )}
 
           {activeTab === "activity" && (
             <div className="p-6 rounded-xl border border-border/60 bg-muted/20 text-center space-y-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-semibold">Real-Time Account Synchronization</h4>
-              <p className="text-xs text-muted-foreground max-w-md mx-auto">
-                Every transaction logged updates your net balance, monthly limit, and cash flow in under 20 milliseconds.
+              <Wallet className="w-8 h-8 text-emerald-500 mx-auto" />
+              <h4 className="font-bold text-base">{t("bento1_title")}</h4>
+              <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+                {t("bento1_desc")}
               </p>
             </div>
           )}
-        </div>
-
-        {/* Bottom Banner Badge Bar */}
-        <div className="px-6 py-3 border-t border-border/60 bg-muted/30 flex flex-wrap items-center justify-between text-xs text-muted-foreground gap-2">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" /> 256-Bit SSL Encrypted
-            </span>
-            <span className="flex items-center gap-1.5 hidden sm:flex">
-              <CreditCard className="w-4 h-4 text-blue-500" /> Multi-Account Aggregation
-            </span>
-          </div>
-          <span className="text-[11px] font-mono text-primary font-medium">
-            Live Preview Mode
-          </span>
         </div>
       </div>
     </div>
