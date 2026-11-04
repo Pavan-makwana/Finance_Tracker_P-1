@@ -31,6 +31,7 @@ export function OnboardingModal() {
     currency,
     setCurrency,
     t,
+    formatAmount,
   } = useLanguage();
 
   const [step, setStep] = useState(1);
@@ -196,7 +197,7 @@ export function OnboardingModal() {
                     Target Monthly Limit
                   </span>
                   <span className="text-xl font-black font-mono text-primary">
-                    ₹{targetBudget.toLocaleString("en-IN")}
+                    {formatAmount(targetBudget)}
                   </span>
                 </div>
 
@@ -211,9 +212,9 @@ export function OnboardingModal() {
                 />
 
                 <div className="flex justify-between text-[11px] text-muted-foreground">
-                  <span>₹10,000</span>
-                  <span>₹75,000</span>
-                  <span>₹1,50,000+</span>
+                  <span>{formatAmount(10000)}</span>
+                  <span>{formatAmount(75000)}</span>
+                  <span>{formatAmount(150000)}+</span>
                 </div>
               </div>
 

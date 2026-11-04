@@ -18,6 +18,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/language-provider";
 
 const DATE_RANGES = {
   "7D": { label: "7 Days", days: 7 },
@@ -28,16 +29,8 @@ const DATE_RANGES = {
   ALL: { label: "All Time", days: null },
 };
 
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-};
-
 const AccountChart = ({ transactions, isLoading }) => {
+  const { formatAmount } = useLanguage();
   const [dateRange, setDateRange] = useState("1M");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -197,7 +190,7 @@ const AccountChart = ({ transactions, isLoading }) => {
               <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Total Income</span>
             </div>
             <div className="mt-2 text-2xl font-bold font-mono text-emerald-700 dark:text-emerald-400">
-              {formatCurrency(totals.income)}
+              {formatAmount(totals.income)}
             </div>
           </div>
           
@@ -207,7 +200,7 @@ const AccountChart = ({ transactions, isLoading }) => {
               <span className="text-xs font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-300">Total Expenses</span>
             </div>
             <div className="mt-2 text-2xl font-bold font-mono text-rose-700 dark:text-rose-400">
-              {formatCurrency(totals.expense)}
+              {formatAmount(totals.expense)}
             </div>
           </div>
 
@@ -232,7 +225,7 @@ const AccountChart = ({ transactions, isLoading }) => {
               "mt-2 text-2xl font-bold font-mono",
               isPositive ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"
             )}>
-              {netAmount < 0 ? `-${formatCurrency(Math.abs(netAmount))}` : formatCurrency(netAmount)}
+              {netAmount < 0 ? `-${formatAmount(Math.abs(netAmount))}` : formatAmount(netAmount)}
             </div>
           </div>
         </div>
@@ -258,10 +251,10 @@ const AccountChart = ({ transactions, isLoading }) => {
               <YAxis
                 width={chartConfig.axisWidth}
                 tick={{ fontSize: chartConfig.fontSize }}
-                tickFormatter={(value) => `₹${value.toLocaleString('en-IN')}`}
+                tickFormatter={(value) => formatAmount(value)}
               />
               <Tooltip
-                formatter={(value) => [`₹${value.toLocaleString('en-IN')}`, '']}
+                formatter={(value) => [formatAmount(value), '']}
                 contentStyle={{ fontSize: chartConfig.tooltipFontSize }}
                 cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }}
               />

@@ -125,21 +125,21 @@ export function CanIAffordItCard({
               onClick={() => handleTestSample("Weekend Dinner", "1200")}
               className="text-xs px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/80 text-foreground transition-colors font-medium"
             >
-              🍕 Dinner (₹1.2k)
+              🍕 Dinner ({formatAmount(1200)})
             </button>
             <button
               type="button"
               onClick={() => handleTestSample("New Sneakers", "4500")}
               className="text-xs px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/80 text-foreground transition-colors font-medium"
             >
-              👟 Shoes (₹4.5k)
+              👟 Shoes ({formatAmount(4500)})
             </button>
             <button
               type="button"
               onClick={() => handleTestSample("Smart Watch", "15000")}
               className="text-xs px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/80 text-foreground transition-colors font-medium"
             >
-              ⌚ Watch (₹15k)
+              ⌚ Watch ({formatAmount(15000)})
             </button>
           </div>
         </div>

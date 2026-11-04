@@ -5,18 +5,10 @@ import { Suspense } from "react";
 import { TransactionTable } from "../_components/transaction-table";
 import { BarLoader } from "react-spinners";
 import AccountChart from "../_components/account-chart";
+import { AccountBalanceDisplay } from "../_components/account-balance-display";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Plus, Landmark, Wallet } from "lucide-react";
-
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-};
 
 export const dynamic = "force-dynamic";
 
@@ -80,7 +72,7 @@ const AccountPage = async ({ params }) => {
               Current Balance
             </p>
             <div className="text-2xl sm:text-3xl font-black font-mono tracking-tight text-foreground mt-0.5">
-              {formatCurrency(account.balance)}
+              <AccountBalanceDisplay balance={account.balance} />
             </div>
           </div>
 

@@ -21,15 +21,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import useFetch from "@/hooks/use-fetch";
 import { updateBudget } from "@/actions/budget";
-
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-};
+import { useLanguage, CURRENCY_CONFIG } from "@/components/language-provider";
 
 export function DashboardOverview({
   accounts = [],
@@ -38,6 +30,8 @@ export function DashboardOverview({
   currentExpenses = 0,
 }) {
   const router = useRouter();
+  const { formatAmount, currency } = useLanguage();
+  const currencySymbol = CURRENCY_CONFIG[currency]?.symbol || "₹";
 
   // Budget Editing State
   const [isEditingBudget, setIsEditingBudget] = useState(false);
@@ -146,7 +140,7 @@ export function DashboardOverview({
           {isEditingBudget ? (
             <div className="space-y-2">
               <div className="relative">
-                <span className="absolute left-2.5 top-2 text-xs text-muted-foreground">₹</span>
+                <span className="absolute left-2.5 top-2 text-xs text-muted-foreground">{currencySymbol}</span>
                 <Input
                   type="number"
                   value={newBudget}
@@ -181,7 +175,7 @@ export function DashboardOverview({
           ) : (
             <div>
               <div className="text-2xl font-black font-mono tracking-tight text-foreground">
-                {budgetAmount > 0 ? formatCurrency(budgetAmount) : "No Limit Set"}
+                {budgetAmount > 0 ? formatAmount(budgetAmount) : "No Limit Set"}
               </div>
               {budgetAmount > 0 ? (
                 <div className="space-y-1.5 mt-2.5">
@@ -197,7 +191,7 @@ export function DashboardOverview({
                     className="h-1.5"
                   />
                   <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-                    <span>{formatCurrency(currentExpenses)} spent</span>
+                    <span>{formatAmount(currentExpenses)} spent</span>
                     <span
                       className={`font-semibold ${
                         percentUsed >= 100
@@ -233,7 +227,7 @@ export function DashboardOverview({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-black font-mono tracking-tight text-foreground">
-            {formatCurrency(stats.totalNetWorth)}
+            {formatAmount(stats.totalNetWorth)}
           </div>
           <p className="text-xs text-muted-foreground mt-1.5">
             Across {accounts.length} {accounts.length === 1 ? "account" : "accounts"}
@@ -253,7 +247,7 @@ export function DashboardOverview({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-black font-mono tracking-tight text-emerald-600 dark:text-emerald-400">
-            {formatCurrency(stats.totalIncome)}
+            {formatAmount(stats.totalIncome)}
           </div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1.5">
             <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />
@@ -274,7 +268,7 @@ export function DashboardOverview({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-black font-mono tracking-tight text-rose-600 dark:text-rose-400">
-            {formatCurrency(stats.totalExpense)}
+            {formatAmount(stats.totalExpense)}
           </div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1.5">
             <TrendingDown className="h-3.5 w-3.5 text-rose-500" />
@@ -301,7 +295,7 @@ export function DashboardOverview({
                 : "text-rose-600"
             }`}
           >
-            {formatCurrency(stats.netSavings)}
+            {formatAmount(stats.netSavings)}
           </div>
           <p className="text-xs text-muted-foreground mt-1.5">
             {stats.totalIncome > 0

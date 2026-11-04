@@ -177,7 +177,7 @@ export function FinancialHealthCard({
                       {item.label}
                     </p>
                     <p className="text-[11px] font-mono text-muted-foreground font-bold">
-                      ₹{item.amount}
+                      {formatAmount(item.amount)}
                     </p>
                   </div>
                 </Link>

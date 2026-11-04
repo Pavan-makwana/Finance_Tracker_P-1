@@ -57,6 +57,7 @@ import { bulkDeleteTransactions } from "@/actions/accounts";
 import { useFetch } from "@/lib/fetch";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/language-provider";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -67,17 +68,8 @@ const RECURRING_INTERVALS = {
   YEARLY: "Yearly",
 };
 
-// Format currency in Indian Rupees
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(amount);
-};
-
 export function TransactionTable({ transactions }) {
+  const { formatAmount } = useLanguage();
   const [selectedIds, setSelectedIds] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     field: "date",
@@ -437,7 +429,7 @@ export function TransactionTable({ transactions }) {
                         : "text-emerald-600 dark:text-emerald-400"
                     )}
                   >
-                    {transaction.type === "EXPENSE" ? "-" : "+"}{formatCurrency(transaction.amount)}
+                    {transaction.type === "EXPENSE" ? "-" : "+"}{formatAmount(transaction.amount)}
                   </TableCell>
                   <TableCell>
                     {transaction.isRecurring ? (

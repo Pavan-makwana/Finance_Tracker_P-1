@@ -29,6 +29,7 @@ import { CreateAccountDrawer } from "@/components/create-account-drawer";
 import { cn } from "@/lib/utils";
 import { createTransaction, updateTransaction } from "@/actions/transaction";
 import { transactionSchema } from "@/app/lib/schema";
+import { useLanguage, CURRENCY_CONFIG } from "@/components/language-provider";
 
 export function AddTransactionForm({
   accounts,
@@ -39,6 +40,8 @@ export function AddTransactionForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit");
+  const { formatAmount, currency } = useLanguage();
+  const currencySymbol = CURRENCY_CONFIG[currency]?.symbol || "₹";
 
   const {
     register,
@@ -159,7 +162,7 @@ export function AddTransactionForm({
               </label>
               <div className="relative">
                 <span className="absolute left-3.5 top-3 text-sm font-semibold text-muted-foreground">
-                  ₹
+                  {currencySymbol}
                 </span>
                 <Input
                   type="number"
@@ -188,7 +191,7 @@ export function AddTransactionForm({
                 <SelectContent className="max-h-72">
                   {accounts.map((account) => (
                     <SelectItem key={account.id} value={account.id} className="cursor-pointer">
-                      {account.name} (₹{parseFloat(account.balance).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })})
+                      {account.name} ({formatAmount(account.balance)})
                     </SelectItem>
                   ))}
                   <CreateAccountDrawer>

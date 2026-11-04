@@ -18,8 +18,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { updateBudget } from "@/actions/budget";
+import { useLanguage, CURRENCY_CONFIG } from "@/components/language-provider";
 
 export function BudgetProgress({ initialBudget, currentExpenses = 0 }) {
+  const { formatAmount, currency } = useLanguage();
+  const currencySymbol = CURRENCY_CONFIG[currency]?.symbol || "₹";
   const [isEditing, setIsEditing] = useState(false);
   const [newBudget, setNewBudget] = useState(
     initialBudget?.amount?.toString() || ""
@@ -108,7 +111,7 @@ export function BudgetProgress({ initialBudget, currentExpenses = 0 }) {
             {isEditing ? (
               <div className="flex items-center gap-2">
                 <div className="relative">
-                  <span className="absolute left-2.5 top-2 text-sm text-gray-500">₹</span>
+                  <span className="absolute left-2.5 top-2 text-sm text-gray-500">{currencySymbol}</span>
                   <Input
                     type="number"
                     value={newBudget}
@@ -142,7 +145,7 @@ export function BudgetProgress({ initialBudget, currentExpenses = 0 }) {
               <div className="flex items-center gap-2">
                 <CardDescription className="text-sm">
                   {initialBudget
-                    ? `₹${currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })} spent of ₹${budgetAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })} limit this month`
+                    ? `${formatAmount(currentExpenses)} spent of ${formatAmount(budgetAmount)} limit this month`
                     : "No monthly budget limit set yet"}
                 </CardDescription>
                 <Button
@@ -174,7 +177,7 @@ export function BudgetProgress({ initialBudget, currentExpenses = 0 }) {
               }
             />
             <div className="flex justify-between text-xs text-muted-foreground pt-1">
-              <span>This Month: ₹{currentExpenses.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+              <span>This Month: {formatAmount(currentExpenses)}</span>
               <span>{percentUsed.toFixed(1)}% used</span>
             </div>
           </div>

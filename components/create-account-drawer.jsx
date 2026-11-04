@@ -27,8 +27,11 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { createAccount } from "@/actions/dashboard";
 import { accountSchema } from "@/app/lib/schema";
+import { useLanguage, CURRENCY_CONFIG } from "@/components/language-provider";
 
 export function CreateAccountDrawer({ children }) {
+  const { currency } = useLanguage();
+  const currencySymbol = CURRENCY_CONFIG[currency]?.symbol || "₹";
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -135,7 +138,7 @@ export function CreateAccountDrawer({ children }) {
                 id="balance"
                 type="number"
                 step="0.01"
-                placeholder="₹0.00"
+                placeholder={`${currencySymbol}0.00`}
                 {...register("balance")}
               />
               {errors.balance && (
