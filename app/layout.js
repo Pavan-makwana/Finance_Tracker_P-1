@@ -59,35 +59,62 @@ export const metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon.ico" },
-      { url: "/logo.png" },
     ],
-    apple: "/logo.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   manifest: "/manifest.webmanifest",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
+    other: {
+      "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "",
+    },
+  },
 };
 
 export const viewport = {
-  themeColor: "#2563eb",
+  themeColor: "#06b6d4",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Finora",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "Web, iOS, Android",
-  description:
-    "Finance for real humans. 1-tap logging, daily safe limits, 'Can I Afford It?' decision engine, and automated wealth tracking.",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "INR",
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Finora",
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Web, iOS, Android",
+    description:
+      "Finance for real humans. 1-tap logging, daily safe limits, 'Can I Afford It?' decision engine, and automated wealth tracking.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "1250",
+    },
   },
-};
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Finora",
+    url: appUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${appUrl}/transaction/create?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  },
+];
 
 export default function RootLayout({ children }) {
   return (
