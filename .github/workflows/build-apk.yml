@@ -40,7 +40,14 @@ jobs:
         run: chmod +x android/gradlew
 
       - name: Sync Capacitor Android
-        run: npx cap sync android --verbose
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+        run: |
+          npx cap sync android --verbose 2>&1 | tee cap_sync.log || {
+            echo "::error title=CapSyncError::$(tail -n 30 cap_sync.log | tr '\n' ' ')"
+            exit 1
+          }
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
