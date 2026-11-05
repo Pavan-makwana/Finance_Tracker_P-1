@@ -1,0 +1,12 @@
+{
+  "appId": "com.finora.finance",
+  "appName": "Finora",
+  "webDir": "public",
+  "server": {
+    "url": "http://10.10.81.10:3001",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

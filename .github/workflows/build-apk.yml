@@ -31,13 +31,16 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install NPM Dependencies
-        run: npm ci
+        run: npm install
         env:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/finora"
           DIRECT_URL: "postgresql://postgres:postgres@localhost:5432/finora"
 
+      - name: Ensure gradlew executable
+        run: chmod +x android/gradlew
+
       - name: Sync Capacitor Android
-        run: npx cap sync android
+        run: npx cap sync android --verbose
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
